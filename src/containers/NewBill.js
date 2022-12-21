@@ -16,6 +16,12 @@ export default class NewBill {
     new Logout({ document, localStorage, onNavigate })
   }
   // TODO Rajouter ici vérification extension images uploadées
+  /**
+   *
+   let file1 = "somefile.txt";
+   console.log(file1.split(".").pop());
+   log = txt
+   * */
   handleChangeFile = e => {
     e.preventDefault()
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
