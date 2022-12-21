@@ -1,8 +1,16 @@
 import VerticalLayout from './VerticalLayout.js'
 import ErrorPage from "./ErrorPage.js"
 import LoadingPage from "./LoadingPage.js"
-
 import Actions from './Actions.js'
+import {bills} from "../fixtures/bills.js";
+
+// ! Tri par date dans l'ordre anti-chrono
+function billsSortedByDate() {
+  const sortByDate = (a, b) => ((a.date < b.date) ? 1 : -1)
+  bills.sort(sortByDate)
+  return bills
+}
+billsSortedByDate()
 
 const row = (bill) => {
   return (`
@@ -18,6 +26,7 @@ const row = (bill) => {
     </tr>
     `)
   }
+
 
 const rows = (data) => {
   return (data && data.length) ? data.map(bill => row(bill)).join("") : ""
