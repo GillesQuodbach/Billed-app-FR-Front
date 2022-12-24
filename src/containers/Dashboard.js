@@ -1,3 +1,5 @@
+//? Rendu du Dashboard
+
 import { formatDate } from '../app/format.js'
 import DashboardFormUI from '../views/DashboardFormUI.js'
 import BigBilledIcon from '../assets/svg/big_billed.js'
@@ -28,6 +30,7 @@ export const filteredBills = (data, status) => {
 }
 
 export const card = (bill) => {
+
   const firstAndLastNames = bill.email.split('@')[0]
   const firstName = firstAndLastNames.includes('.') ?
     firstAndLastNames.split('.')[0] : ''
@@ -112,7 +115,7 @@ export default class {
     $('#btn-accept-bill').click((e) => this.handleAcceptSubmit(e, bill))
     $('#btn-refuse-bill').click((e) => this.handleRefuseSubmit(e, bill))
     // Ajouter ligne 115, remise a zéro du compteur
-    this.counter = 0
+
   }
 
   handleAcceptSubmit = (e, bill) => {

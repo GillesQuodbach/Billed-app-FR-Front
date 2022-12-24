@@ -3,6 +3,7 @@ import { ROUTES_PATH } from '../constants/routes.js'
 import { formatDate, formatStatus } from "../app/format.js"
 import Logout from "./Logout.js"
 
+//Page bills
 export default class {
   constructor({ document, onNavigate, store, localStorage }) {
     this.document = document
@@ -17,18 +18,23 @@ export default class {
     new Logout({ document, localStorage, onNavigate })
   }
 
+  //Bouton Nouvelle note de frais
   handleClickNewBill = () => {
     this.onNavigate(ROUTES_PATH['NewBill'])
   }
 
+  //TODO ici qu'on va chercher l'image a afficher (alt = bill)
   handleClickIconEye = (icon) => {
+    //? data-bill-url = null quand l'image ne s'affiche pas
     const billUrl = icon.getAttribute("data-bill-url")
+    console.log(billUrl)
     const imgWidth = Math.floor($('#modaleFile').width() * 0.5)
     $('#modaleFile').find(".modal-body").html(`<div style='text-align: center;' class="bill-proof-container"><img width=${imgWidth} src=${billUrl} alt="Bill" /></div>`)
     $('#modaleFile').modal('show')
   }
 
   getBills = () => {
+
     if (this.store) {
       return this.store
       .bills()

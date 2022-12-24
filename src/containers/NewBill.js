@@ -1,6 +1,7 @@
 import { ROUTES_PATH } from '../constants/routes.js'
 import Logout from "./Logout.js"
 
+//Class NewBill
 export default class NewBill {
   constructor({ document, onNavigate, store, localStorage }) {
     this.document = document
@@ -10,6 +11,7 @@ export default class NewBill {
     formNewBill.addEventListener("submit", this.handleSubmit)
     const file = this.document.querySelector(`input[data-testid="file"]`)
     file.addEventListener("change", this.handleChangeFile)
+    console.log(file)
     this.fileUrl = null
     this.fileName = null
     this.billId = null
@@ -25,8 +27,19 @@ export default class NewBill {
   handleChangeFile = e => {
     e.preventDefault()
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
+
+    // console.log(file) => file.name affiche xxxx.ext
+    const fileExtension = file.name
+    const extension = (fileExtension.split(".").pop())
+    console.log(extension)
+    if (extension !== ("png" || "jpg" || "jpeg" | "bmp")) {
+      this.document.querySelector(`input[data-testid="file"]`).value = null
+      alert(`Seule les images sont autorisées`)
+    }
     const filePath = e.target.value.split(/\\/g)
+    console.log(filePath)
     const fileName = filePath[filePath.length-1]
+    console.log(fileName)
     const formData = new FormData()
     const email = JSON.parse(localStorage.getItem("user")).email
     formData.append('file', file)
@@ -41,9 +54,9 @@ export default class NewBill {
         }
       })
       .then(({fileUrl, key}) => {
-        console.log(fileUrl)
         this.billId = key
         this.fileUrl = fileUrl
+        console.log(fileUrl)
         this.fileName = fileName
       }).catch(error => console.error(error))
   }
@@ -53,17 +66,27 @@ export default class NewBill {
     const email = JSON.parse(localStorage.getItem("user")).email
     const bill = {
       email,
+      //Type de dépense
       type: e.target.querySelector(`select[data-testid="expense-type"]`).value,
+      //Nom de la dépense
       name:  e.target.querySelector(`input[data-testid="expense-name"]`).value,
+      //Montant
       amount: parseInt(e.target.querySelector(`input[data-testid="amount"]`).value),
+      //Date
       date:  e.target.querySelector(`input[data-testid="datepicker"]`).value,
+      // TAXES
       vat: e.target.querySelector(`input[data-testid="vat"]`).value,
       pct: parseInt(e.target.querySelector(`input[data-testid="pct"]`).value) || 20,
+      //Commentaire
       commentary: e.target.querySelector(`textarea[data-testid="commentary"]`).value,
+      //Url du justificatif
       fileUrl: this.fileUrl,
+
+      //Nom du justificatif
       fileName: this.fileName,
       status: 'pending'
     }
+    console.log(this.fileUrl)
     this.updateBill(bill)
     this.onNavigate(ROUTES_PATH['Bills'])
   }

@@ -11,8 +11,8 @@ function billsSortedByDate() {
   return bills
 }
 billsSortedByDate()
-
 const row = (bill) => {
+
   return (`
     <tr>
       <td>${bill.type}</td>
@@ -32,6 +32,7 @@ const rows = (data) => {
   return (data && data.length) ? data.map(bill => row(bill)).join("") : ""
 }
 
+//La modal contenant l'image justificative
 export default ({ data: bills, loading, error }) => {
   
   const modal = () => (`
