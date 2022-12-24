@@ -23,9 +23,10 @@ export default class NewBill {
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
     // TODO ici vérification extension images uploadées
     //Gestion de l'extension du fichier uploadé
+    const allowedExtensionArray = ["jpg", "jpeg", "png", "bmp"]
     const fileExtension = file.name
     const extension = (fileExtension.split(".").pop())
-    if (extension !== ("png" || "jpg" || "jpeg" | "bmp")) {
+    if (!allowedExtensionArray.includes(extension.toLocaleLowerCase())) {
       this.document.querySelector(`input[data-testid="file"]`).value = null
       alert(`L'extension : "${extension}" n'est valide !
 Seule les images sont autorisées`)
@@ -52,6 +53,7 @@ Seule les images sont autorisées`)
         this.fileUrl = fileUrl
         console.log(fileUrl)
         this.fileName = fileName
+        console.log(fileName)
       }).catch(error => console.error(error))
   }
   handleSubmit = e => {
