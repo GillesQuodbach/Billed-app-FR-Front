@@ -17,24 +17,18 @@ export default class NewBill {
     this.billId = null
     new Logout({ document, localStorage, onNavigate })
   }
-  // TODO Rajouter ici vérification extension images uploadées
-  /**
-   *
-   let file1 = "somefile.txt";
-   console.log(file1.split(".").pop());
-   log = txt
-   * */
+
   handleChangeFile = e => {
     e.preventDefault()
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
-
-    // console.log(file) => file.name affiche xxxx.ext
+    // TODO ici vérification extension images uploadées
+    //Gestion de l'extension du fichier uploadé
     const fileExtension = file.name
     const extension = (fileExtension.split(".").pop())
-    console.log(extension)
     if (extension !== ("png" || "jpg" || "jpeg" | "bmp")) {
       this.document.querySelector(`input[data-testid="file"]`).value = null
-      alert(`Seule les images sont autorisées`)
+      alert(`L'extension : "${extension}" n'est valide !
+Seule les images sont autorisées`)
     }
     const filePath = e.target.value.split(/\\/g)
     console.log(filePath)
@@ -86,7 +80,6 @@ export default class NewBill {
       fileName: this.fileName,
       status: 'pending'
     }
-    console.log(this.fileUrl)
     this.updateBill(bill)
     this.onNavigate(ROUTES_PATH['Bills'])
   }
