@@ -23,9 +23,7 @@ export default class {
     this.onNavigate(ROUTES_PATH['NewBill'])
   }
 
-  //TODO ici qu'on va chercher l'image a afficher (alt = bill)
   handleClickIconEye = (icon) => {
-    //? data-bill-url = null quand l'image ne s'affiche pas
     const billUrl = icon.getAttribute("data-bill-url")
     console.log(billUrl)
     const imgWidth = Math.floor($('#modaleFile').width() * 0.5)

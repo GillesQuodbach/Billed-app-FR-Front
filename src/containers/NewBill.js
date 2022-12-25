@@ -21,39 +21,39 @@ export default class NewBill {
   handleChangeFile = e => {
     e.preventDefault()
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
-    // TODO ici vérification extension images uploadées
-    //Gestion de l'extension du fichier uploadé
-    const allowedExtensionArray = ["jpg", "jpeg", "png", "bmp"]
-    const fileExtension = file.name
-    const extension = (fileExtension.split(".").pop())
-    if (!allowedExtensionArray.includes(extension.toLocaleLowerCase())) {
-      this.document.querySelector(`input[data-testid="file"]`).value = null
-      alert(`L'extension : "${extension}" n'est valide !
+        // TODO ici vérification extension images uploadées
+        //Gestion de l'extension du fichier uploadé
+        const allowedExtensionArray = ["jpg", "jpeg", "png", "bmp"]
+        const fileExtension = file.name
+        const extension = (fileExtension.split(".").pop())
+        if (!allowedExtensionArray.includes(extension.toLocaleLowerCase())) {
+          this.document.querySelector(`input[data-testid="file"]`).value = null
+          alert(`L'extension : "${extension}" n'est valide !
 Seule les images sont autorisées`)
-    }
-    const filePath = e.target.value.split(/\\/g)
-    console.log(filePath)
-    const fileName = filePath[filePath.length-1]
-    console.log(fileName)
-    const formData = new FormData()
-    const email = JSON.parse(localStorage.getItem("user")).email
-    formData.append('file', file)
-    formData.append('email', email)
-
-    this.store
-      .bills()
-      .create({
-        data: formData,
-        headers: {
-          noContentType: true
         }
-      })
-      .then(({fileUrl, key}) => {
-        this.billId = key
-        this.fileUrl = fileUrl
-        console.log(fileUrl)
-        this.fileName = fileName
+        const filePath = e.target.value.split(/\\/g)
+        console.log(filePath)
+        const fileName = filePath[filePath.length-1]
         console.log(fileName)
+        const formData = new FormData()
+        const email = JSON.parse(localStorage.getItem("user")).email
+        formData.append('file', file)
+        formData.append('email', email)
+
+        this.store
+            .bills()
+            .create({
+              data: formData,
+              headers: {
+                noContentType: true
+              }
+            })
+            .then(({fileUrl, key}) => {
+              this.billId = key
+              this.fileUrl = fileUrl
+              console.log(fileUrl)
+              this.fileName = fileName
+              console.log(fileName)
       }).catch(error => console.error(error))
   }
   handleSubmit = e => {
