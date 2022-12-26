@@ -1,13 +1,14 @@
 /**
  * @jest-environment jsdom
  */
-
+import '@testing-library/jest-dom'
+import userEvent from "@testing-library/user-event";
 import {getByTestId, screen, waitFor} from "@testing-library/dom"
 import BillsUI from "../views/BillsUI.js"
+import Bills from "../containers/Bills.js"
 import { bills } from "../fixtures/bills.js"
 import { ROUTES_PATH} from "../constants/routes.js";
 import {localStorageMock} from "../__mocks__/localStorage.js";
-
 import router from "../app/Router.js";
 
 describe("Given I am connected as an employee", () => {
@@ -27,9 +28,6 @@ describe("Given I am connected as an employee", () => {
       const windowIcon = screen.getByTestId('icon-window')
       //to-do write expect expression
       expect(windowIcon.classList.contains('active-icon')).toBe(true)
-
-
-
     })
     test("Then bills should be ordered from earliest to latest", () => {
       document.body.innerHTML = BillsUI({ data: bills })
@@ -37,6 +35,23 @@ describe("Given I am connected as an employee", () => {
       const antiChrono = (a, b) => ((a < b) ? 1 : -1)
       const datesSorted = [...dates].sort(antiChrono)
       expect(dates).toEqual(datesSorted)
+    })
+    //TODO test new bill button
+    test("Then the NewBills button should display NewBillPage",async () => {
+      Object.defineProperty(window, 'localStorage', { value: localStorageMock })
+      window.localStorage.setItem('user', JSON.stringify({
+        type: 'Employee'
+      }))
+      const root = document.createElement("div")
+      root.setAttribute("id", "root")
+      document.body.append(root)
+      router()
+      window.onNavigate(ROUTES_PATH.Bills)
+      await waitFor(() => screen.getByTestId('btn-new-bill'))
+      const newBillButton = screen.getByTestId('btn-new-bill')
+      //ajouter un click sur le button
+      userEvent.click(newBillButton)
+      expect(window.location.href).toBe('http://localhost/#employee/bill/new')
     })
   })
 })

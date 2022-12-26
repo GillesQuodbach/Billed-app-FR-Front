@@ -19,7 +19,7 @@ export default class {
   }
 
   //Bouton Nouvelle note de frais
-  handleClickNewBill = () => {
+handleClickNewBill = () => {
     this.onNavigate(ROUTES_PATH['NewBill'])
   }
 
