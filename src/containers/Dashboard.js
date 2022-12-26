@@ -115,7 +115,7 @@ export default class {
     $('#btn-accept-bill').click((e) => this.handleAcceptSubmit(e, bill))
     $('#btn-refuse-bill').click((e) => this.handleRefuseSubmit(e, bill))
     // Ajouter ligne 115, remise a zéro du compteur
-
+    this.counter = 0
   }
 
   handleAcceptSubmit = (e, bill) => {
