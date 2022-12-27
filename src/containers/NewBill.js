@@ -11,7 +11,6 @@ export default class NewBill {
     formNewBill.addEventListener("submit", this.handleSubmit)
     const file = this.document.querySelector(`input[data-testid="file"]`)
     file.addEventListener("change", this.handleChangeFile)
-    console.log(file)
     this.fileUrl = null
     this.fileName = null
     this.billId = null
@@ -32,9 +31,7 @@ export default class NewBill {
 Seule les images sont autorisées`)
         }
         const filePath = e.target.value.split(/\\/g)
-        console.log(filePath)
         const fileName = filePath[filePath.length-1]
-        console.log(fileName)
         const formData = new FormData()
         const email = JSON.parse(localStorage.getItem("user")).email
         formData.append('file', file)
@@ -51,9 +48,7 @@ Seule les images sont autorisées`)
             .then(({fileUrl, key}) => {
               this.billId = key
               this.fileUrl = fileUrl
-              console.log(fileUrl)
               this.fileName = fileName
-              console.log(fileName)
       }).catch(error => console.error(error))
   }
   handleSubmit = e => {
