@@ -3,11 +3,7 @@ import ErrorPage from "./ErrorPage.js"
 import LoadingPage from "./LoadingPage.js"
 import Actions from './Actions.js'
 import {bills} from "../fixtures/bills.js";
-
-
-
 const row = (bill) => {
-
   return (`
     <tr>
       <td>${bill.type}</td>
@@ -21,23 +17,18 @@ const row = (bill) => {
     </tr>
     `)
   }
-
-// ! Tri par date dans l'ordre anti-chrono
-function billsSortedByDate() {
-    const sortByDate = (a, b) => ((a.date < b.date) ? 1 : -1)
-    bills.sort(sortByDate)
-    return bills
+const sortedAntiChrono = (data) => {
+    data.sort((a, b) => (a.date < b.date)? 1 : -1)
+    return data
 }
-
+sortedAntiChrono(bills)
 //TODO mettre ici tri par date
 const rows = (data) => {
-    console.log(data)
   return (data && data.length) ? data.map(bill => row(bill)).join("") : ""
 }
 
 //La modal contenant l'image justificative
 export default ({ data: bills, loading, error }) => {
-
   const modal = () => (`
     <div class="modal fade" id="modaleFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
