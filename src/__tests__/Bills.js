@@ -66,7 +66,7 @@ describe("Given I am connected as an employee", () => {
     })
   })
 
-  //* Test d'affichage de la modal
+  //* Test d'affichage de la modale
   test('When I click on the eye-icon, the modal should be displayed', async ()=> {
     Object.defineProperty(window, 'localStorage', { value: localStorageMock })
     window.localStorage.setItem('user', JSON.stringify({
@@ -86,8 +86,10 @@ describe("Given I am connected as an employee", () => {
       store,
       localStorage: window.localStorage,
     })
+    //Appelle de la fonction
     const spyOpenModal = jest.spyOn(containersBills, 'handleClickIconEye')
     await spyOpenModal(iconEye)
+
     expect(spyOpenModal).toHaveBeenCalledTimes(1)
     //Jusqu'ici le test est vert
     //Après il récupère bien le html mais fait test AVANT que show soit appliqué
