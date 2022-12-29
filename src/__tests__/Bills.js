@@ -89,13 +89,7 @@ describe("Given I am connected as an employee", () => {
     //Appelle de la fonction
     const spyOpenModal = jest.spyOn(containersBills, 'handleClickIconEye')
     await spyOpenModal(iconEye)
-
     expect(spyOpenModal).toHaveBeenCalledTimes(1)
-    //Jusqu'ici le test est vert
-    //Après il récupère bien le html mais fait test AVANT que show soit appliqué
-    // await waitFor(()=> document.getElementById('modaleFile'))
-    // const modale = document.getElementById('modaleFile')
-    // await expect(modale).toHaveClass('show')
   })
 
   //* TEST INTEGRATION GET BILLS

@@ -36,7 +36,6 @@ export default class Login {
       })
 
   }
-
   handleSubmitAdmin = e => {
     e.preventDefault()
     const user = {
@@ -57,7 +56,7 @@ export default class Login {
         document.body.style.backgroundColor="#fff"
       })
   }
-
+  /* istanbul ignore next */
   // not need to cover this function by tests
   login = (user) => {
     if (this.store) {
@@ -72,7 +71,7 @@ export default class Login {
       return null
     }
   }
-
+  /* istanbul ignore next */
   // not need to cover this function by tests
   createUser = (user) => {
     if (this.store) {
