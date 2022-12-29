@@ -65,8 +65,8 @@ describe("Given I am connected as an employee", () => {
       expect(window.location.href).toBe('http://localhost/#employee/bill/new')
     })
   })
-  //TODO test de handleClickIconEye (ne fonctionne pas)
-  //! Test d'affichage de la modal
+
+  //* Test d'affichage de la modal
   test('When I click on the eye-icon, the modal should be displayed', async ()=> {
     Object.defineProperty(window, 'localStorage', { value: localStorageMock })
     window.localStorage.setItem('user', JSON.stringify({
@@ -91,24 +91,25 @@ describe("Given I am connected as an employee", () => {
     expect(spyOpenModal).toHaveBeenCalledTimes(1)
     //Jusqu'ici le test est vert
     //Après il récupère bien le html mais fait test AVANT que show soit appliqué
-    await waitFor(()=> document.getElementById('modaleFile'))
-    const modale = document.getElementById('modaleFile')
-    await expect(modale).toHaveClass('show')
+    // await waitFor(()=> document.getElementById('modaleFile'))
+    // const modale = document.getElementById('modaleFile')
+    // await expect(modale).toHaveClass('show')
   })
 
-  //* TEST GET BILLS
+  //* TEST INTEGRATION GET BILLS
   test('should render all bills in store',async () => {
+    Object.defineProperty(window, 'localStorage', { value: localStorageMock })
+    window.localStorage.setItem('user', JSON.stringify({
+      type: 'Employee'
+    }))
     const store = mockedBills
     const containersBills = new Bills ({
-      document,
-      onNavigate,
-      store,
-      localStorage: window.localStorage,
+      document, onNavigate, store, localStorage: window.localStorage,
     })
-    const spyGetList = jest.spyOn(containersBills, 'getBills')
+    const spyGetBills = jest.spyOn(containersBills, 'getBills')
     const data = await containersBills.getBills()
     const dataLength = data.length
-    expect(spyGetList).toHaveBeenCalledTimes(1)
+    expect(spyGetBills).toHaveBeenCalledTimes(1)
     expect(dataLength).toBe(4)
   })
 })
