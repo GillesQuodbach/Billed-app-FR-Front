@@ -90,6 +90,10 @@ describe("Given I am connected as an employee", () => {
     const spyOpenModal = jest.spyOn(containersBills, 'handleClickIconEye')
     await spyOpenModal(iconEye)
     expect(spyOpenModal).toHaveBeenCalledTimes(1)
+    // const iconEye = document.querySelector(`div[data-testid="icon-eye"]`);
+    $.fn.modal = jest.fn();
+    containersBills.handleClickIconEye(iconEye);
+    expect(document.querySelector(".modal")).toBeTruthy();
   })
 
   //* TEST INTEGRATION GET BILLS
