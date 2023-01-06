@@ -20,15 +20,14 @@ export default class NewBill {
   handleChangeFile = e => {
     e.preventDefault()
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
-        // TODO ici vérification extension images uploadées
         //Gestion de l'extension du fichier uploadé
         const allowedExtensionArray = ["jpg", "jpeg", "png", "bmp"]
         const fileExtension = file.name
         const extension = (fileExtension.split(".").pop())
         if (!allowedExtensionArray.includes(extension.toLocaleLowerCase())) {
           this.document.querySelector(`input[data-testid="file"]`).value = null
-          alert(`L'extension : "${extension}" n'est valide !
-Seule les images sont autorisées`)
+          alert(`L'extension : "${extension}" n'est pas valide !
+                  Seul les images sont autorisées`)
         }
         const filePath = e.target.value.split(/\\/g)
         const fileName = filePath[filePath.length-1]
