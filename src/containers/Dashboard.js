@@ -75,6 +75,7 @@ export default class {
     this.document = document
     this.onNavigate = onNavigate
     this.store = store
+
     $('#arrow-icon1').click((e) => this.handleShowTickets(e, bills, 1))
     $('#arrow-icon2').click((e) => this.handleShowTickets(e, bills, 2))
     $('#arrow-icon3').click((e) => this.handleShowTickets(e, bills, 3))
@@ -90,8 +91,12 @@ export default class {
 
   handleEditTicket(e, bill, bills) {
     //this.counter = 1 et après ouverture liste this.counter = 2
-    if (this.counter === undefined || this.id !== bill.id) this.counter = 0
-    if (this.id === undefined || this.id !== bill.id) this.id = bill.id
+    if (this.counter === undefined || this.id !== bill.id) {
+      this.counter = 0
+    }
+    if (this.id === undefined || this.id !== bill.id) {
+      this.id = bill.id
+    }
     if (this.counter % 2 === 0) {
       bills.forEach(b => {
         $(`#open-bill${b.id}`).css({ background: '#0D5AE5' })
@@ -112,9 +117,6 @@ export default class {
     $('#icon-eye-d').click(this.handleClickIconEye)
     $('#btn-accept-bill').click((e) => this.handleAcceptSubmit(e, bill))
     $('#btn-refuse-bill').click((e) => this.handleRefuseSubmit(e, bill))
-    // Ajouter ligne 115, remise a zéro du compteur
-    this.counter = 0
-
   }
 
   handleAcceptSubmit = (e, bill) => {
@@ -138,6 +140,11 @@ export default class {
   }
 
   handleShowTickets(e, bills, index) {
+    // Bug ICI !!!!
+    bills.forEach((bill) => {
+      $(`#open-bill${bill.id}`).off("click")
+
+    })
     if (this.counter === undefined || this.index !== index) this.counter = 0
     if (this.index === undefined || this.index !== index) this.index = index
     if (this.counter % 2 === 0) {
